@@ -20,6 +20,14 @@ the original text and attachments.
 
 ## See it in action
 
+Select messages in WeChat, then choose ChatDrop from the sharing menu:
+
+<p align="center">
+  <img src="docs/images/wechat-share-guide.png" width="960" alt="Illustrated WeChat sharing flow: Forward to other apps, Choose an app on this computer, then ChatDrop in the submenu" />
+</p>
+
+<sub>AI-generated illustration with fictional conversation names.</sub>
+
 <table>
   <tr>
     <td align="center" width="55%"><img src="docs/images/app.jpg" width="480" alt="The native ChatDrop Mac window" /></td>
