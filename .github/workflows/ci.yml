@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  macos:
+    name: macOS tests and build
+    runs-on: macos-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Test CLI and data migration
+        run: /usr/bin/python3 -m unittest discover -s tests -v
+      - name: Build and verify the native app
+        run: |
+          bash scripts/build.sh
+          build/ChatDrop.app/Contents/MacOS/ChatDrop path
+      - name: Package and verify checksum
+        run: |
+          bash scripts/package.sh
+          cd build/releases
+          shasum -a 256 -c *.sha256
