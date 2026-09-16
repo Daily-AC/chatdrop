@@ -20,4 +20,6 @@ cp "$project_dir/Resources/AppIcon.icns" "$app/Contents/Resources/AppIcon.icns"
 /usr/bin/codesign --force --sign - --entitlements "$project_dir/Resources/Share.entitlements" "$extension"
 /usr/bin/codesign --force --sign - "$app"
 /usr/bin/codesign --verify --deep --strict "$app"
+# Refresh bundle-level metadata for in-place upgrades (Spotlight and app icons).
+touch "$extension" "$app"
 echo "$app"
