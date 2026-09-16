@@ -17,6 +17,14 @@
 
 ## 看看它怎么用
 
+在微信中选好消息，从“转发到其他应用”的分享菜单选择 ChatDrop：
+
+<p align="center">
+  <img src="docs/images/wechat-share-guide.png" width="960" alt="微信分享操作示意：转发到其他应用，选择电脑中的应用，在子菜单中选择 ChatDrop" />
+</p>
+
+<sub>AI 生成的操作示意图，会话名称均为虚构。</sub>
+
 <table>
   <tr>
     <td align="center" width="55%"><img src="docs/images/app.jpg" width="480" alt="ChatDrop 原生 Mac 主窗口" /></td>
