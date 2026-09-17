@@ -9,10 +9,11 @@ case "$architecture" in arm64|x86_64) ;; *) echo "Unsupported package architectu
 name="ChatDrop-$version-macos-$architecture"
 staging=$(mktemp -d "$project_dir/build/package.XXXXXX")
 trap 'rm -r "$staging"' EXIT
-mkdir -p "$staging/$name/cli" "$staging/$name/scripts" "$project_dir/build/releases"
+mkdir -p "$staging/$name/cli" "$staging/$name/scripts" "$staging/$name/skills/chatdrop" "$project_dir/build/releases"
 /usr/bin/ditto "$app" "$staging/$name/ChatDrop.app"
 cp "$project_dir/cli/chatdrop.py" "$staging/$name/cli/chatdrop.py"
 cp "$project_dir/scripts/install-cli.sh" "$staging/$name/scripts/install-cli.sh"
+cp "$project_dir/skills/chatdrop/SKILL.md" "$staging/$name/skills/chatdrop/SKILL.md"
 cp "$project_dir/LICENSE" "$staging/$name/LICENSE"
 cat > "$staging/$name/README.txt" <<'EOF'
 ChatDrop
@@ -25,6 +26,8 @@ ChatDrop
 
 CLI requires Python 3.9+ on PATH. In this extracted folder, run:
   bash scripts/install-cli.sh
+This also installs the chatdrop skill for Claude Code and Codex, so the agent
+knows to use the CLI when you ask it about a WeChat chat.
 Add ~/.local/bin to PATH, then run:
   chatdrop conversations
   chatdrop search --conversation 'Project group' --from 2026-09-01 --to 2026-09-16 --all

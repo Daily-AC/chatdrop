@@ -77,6 +77,8 @@ ChatDrop 接收你主动分享或导入的文件，不需要微信数据库密�
 bash scripts/install-cli.sh
 ```
 
+安装脚本还会把 chatdrop 的 agent skill 放进 `~/.claude/skills` 和 `~/.codex/skills`，存在哪个就装哪个。装好之后，直接问 agent 某个微信群里说了什么就行，不用特意提到 chatdrop。用别的 agent，就把它指向 `skills/chatdrop/SKILL.md`；skills CLI 支持的 agent 也可以运行 `npx skills add Daily-AC/chatdrop`。
+
 把 `~/.local/bin` 加入 `PATH`。如果你的 agent 有终端权限，就可以直接告诉它：
 
 > 用 chatdrop 查看“产品讨论群”上周的消息，整理已经确定的决定和还没解决的问题，附上原始消息 ID。
