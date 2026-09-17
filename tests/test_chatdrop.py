@@ -1,5 +1,6 @@
 import importlib.util
 import json
+import os
 from pathlib import Path
 import sqlite3
 import stat
@@ -201,6 +202,30 @@ class ChatDropTests(unittest.TestCase):
                                      "--store", str(self.root / "cli-store"), "--inbox", str(self.root / "inbox"), *arguments], capture_output=True, text=True)
             self.assertNotEqual(result.returncode, 0)
             self.assertIn("error", json.loads(result.stderr))
+
+    def install_cli(self, home):
+        return subprocess.run(["/bin/bash", str(ROOT / "scripts/install-cli.sh")],
+                              text=True, capture_output=True,
+                              env={**os.environ, "HOME": str(home)})
+
+    def test_installer_links_the_skill_only_into_agent_homes_that_exist(self):
+        home = self.root / "home"
+        (home / ".claude").mkdir(parents=True)
+        result = self.install_cli(home)
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        self.assertTrue((home / ".local/bin/chatdrop").is_symlink())
+        skill = home / ".claude/skills/chatdrop/SKILL.md"
+        self.assertTrue(skill.is_file())
+        self.assertEqual(skill.read_text().splitlines()[0], "---")
+        self.assertFalse((home / ".codex").exists())
+        self.assertIn(str(home / ".claude/skills/chatdrop"), result.stdout.splitlines())
+
+    def test_installer_refuses_to_replace_an_unrelated_skill(self):
+        home = self.root / "occupied"
+        (home / ".claude/skills/chatdrop").mkdir(parents=True)
+        result = self.install_cli(home)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("Refusing", result.stderr)
 
     def test_v1_database_migration_preserves_existing_records(self):
         root = self.root / "legacy"

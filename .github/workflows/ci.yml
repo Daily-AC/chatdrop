@@ -27,3 +27,8 @@ jobs:
           bash scripts/package.sh
           cd build/releases
           shasum -a 256 -c *.sha256
+      - name: Verify the release carries the agent skill
+        run: |
+          extracted=$(mktemp -d)
+          unzip -q build/releases/*.zip -d "$extracted"
+          test -f "$extracted"/*/skills/chatdrop/SKILL.md

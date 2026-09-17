@@ -87,6 +87,12 @@ Install the CLI from the extracted release folder:
 bash scripts/install-cli.sh
 ```
 
+The installer also places the chatdrop agent skill into `~/.claude/skills` and
+`~/.codex/skills`, for whichever of those directories exists. From then on you can
+just ask your agent about a WeChat chat without mentioning chatdrop. With another
+agent, point it at `skills/chatdrop/SKILL.md`, or run `npx skills add Daily-AC/chatdrop`
+for agents the skills CLI supports.
+
 Add `~/.local/bin` to `PATH`. Then ask an agent with shell access:
 
 > Use chatdrop to read Product group's messages from last week. Summarize the
